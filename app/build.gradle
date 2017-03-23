@@ -4,7 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
     defaultConfig {
-        applicationId "com.javinindia.employeeattendance"
+        applicationId "com.javinindia.eyedonation"
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 1

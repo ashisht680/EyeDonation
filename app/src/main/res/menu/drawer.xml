@@ -7,50 +7,55 @@
         android:checkableBehavior="single">
 
         <item
-            android:id="@+id/drawer_home"
+            android:id="@+id/drawer_donateEye"
             android:checkable="false"
-            android:icon="@mipmap/ic_launcher"
-            android:title="Home"/>
+            android:icon="@drawable/ic_visibility_white"
+            android:title="Donate your eye"/>
         <item
-            android:id="@+id/drawer_addCategory"
+            android:id="@+id/drawer_eyeCare"
             android:checkable="false"
-            android:icon="@mipmap/ic_launcher"
-            android:title="Add Category"/>
+            android:icon="@drawable/ic_visibility_white"
+            android:title="Eye care"/>
         <item
-            android:id="@+id/drawer_addOffer"
+            android:id="@+id/drawer_eyeHospital"
             android:checkable="false"
-            android:icon="@mipmap/ic_launcher"
-            android:title="Add Offer"/>
+            android:icon="@drawable/ic_local_hospital_white_24dp"
+            android:title="Eye Hospitals"/>
         <item
-            android:id="@+id/drawer_cat_list"
+            android:id="@+id/drawer_faqs"
             android:checkable="false"
-            android:icon="@mipmap/ic_launcher"
-            android:title="Category List"/>
-      <!--  <item
-            android:id="@+id/drawer_looking_for"
+            android:icon="@drawable/ic_question_answer_white_24dp"
+            android:title="FAQs"/>
+        <item
+            android:id="@+id/drawer_events"
             android:checkable="false"
-            android:icon="@mipmap/ic_launcher"
-            android:title="Looking For(Up coming)"/>-->
+            android:icon="@drawable/ic_event_white_24dp"
+            android:title="Events"/>
+        <item
+            android:id="@+id/drawer_gallery"
+            android:checkable="false"
+            android:icon="@drawable/ic_collections_white_24dp"
+            android:title="Gallery"/>
         <item
             android:id="@+id/drawer_about"
             android:checkable="false"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/ic_info_black"
             android:title="About App"/>
         <item
-            android:id="@+id/drawer_share"
+            android:id="@+id/drawer_invite"
             android:checkable="false"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/ic_share_black"
             android:title="Invite"/>
         <item
             android:id="@+id/drawer_rate"
             android:checkable="false"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/ic_star_rate_black"
             android:title="Rate us"/>
 
         <item
             android:id="@+id/drawer_logout"
             android:checkable="false"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/log_out_black"
             android:title="Logout"/>
 
     </group>

@@ -18,7 +18,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="172dp"
-    android:background="@color/toolbar_color"
+    android:background="@color/toolbar_transparent_color"
     android:orientation="vertical"
     android:paddingTop="25dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
@@ -29,7 +29,7 @@
         android:layout_height="64dp"
         android:layout_margin="@dimen/activity_vertical_margin"
         android:elevation="4dp"
-        tools:src="@mipmap/ic_launcher" />
+        tools:src="@drawable/default_avatar" />
 
     <TextView
         android:id="@+id/txtShopName"
