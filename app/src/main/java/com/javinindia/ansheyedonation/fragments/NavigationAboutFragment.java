@@ -123,9 +123,8 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
         if (CheckConnection.haveNetworkConnection(activity)) {
             if (title.equals("Donate your eye")) {
                 drawerLayout.closeDrawers();
-               /* Intent refresh = new Intent(activity, LoginActivity.class);
-                startActivity(refresh);
-                activity.finish();*/
+                DonateEyeFragment fragment = new DonateEyeFragment();
+                callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
             } else if (title.equals("Eye care")) {
                 drawerLayout.closeDrawers();
 
@@ -321,11 +320,24 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
 
     private void initialize(View view) {
         progressBar = (ProgressBar) view.findViewById(R.id.progress);
+
+        AppCompatButton btnRecipientRegister = (AppCompatButton) view.findViewById(R.id.btnRecipientRegister);
+        btnRecipientRegister.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
+
         RelativeLayout rlDonateEye = (RelativeLayout) view.findViewById(R.id.rlDonateEye);
+        RelativeLayout rlEyeCare = (RelativeLayout) view.findViewById(R.id.rlEyeCare);
+        RelativeLayout rlEyeHospitals = (RelativeLayout) view.findViewById(R.id.rlEyeHospitals);
+        RelativeLayout rlFAQs = (RelativeLayout) view.findViewById(R.id.rlFAQs);
+        RelativeLayout rlEvents = (RelativeLayout) view.findViewById(R.id.rlEvents);
+        RelativeLayout rlGallery = (RelativeLayout) view.findViewById(R.id.rlGallery);
+
         rlDonateEye.setOnClickListener(this);
-        AppCompatButton btnAddOffer = (AppCompatButton) view.findViewById(R.id.btnAddOffer);
-        btnAddOffer.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        btnAddOffer.setOnClickListener(this);
+        rlEyeCare.setOnClickListener(this);
+        rlEyeHospitals.setOnClickListener(this);
+        rlFAQs.setOnClickListener(this);
+        rlEvents.setOnClickListener(this);
+        rlGallery.setOnClickListener(this);
+        btnRecipientRegister.setOnClickListener(this);
     }
 
 
@@ -347,11 +359,10 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btnAddOffer:
+            case R.id.btnRecipientRegister:
                 if (CheckConnection.haveNetworkConnection(activity)) {
-//                    AddNewOfferFragment fragment = new AddNewOfferFragment();
-//                    fragment.setMyCallBackOfferListener(this);
-//                    callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
+                    RecipientRegistrationFragment fragment = new RecipientRegistrationFragment();
+                    callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
                 } else {
                     methodCallCheckInternet();
                 }

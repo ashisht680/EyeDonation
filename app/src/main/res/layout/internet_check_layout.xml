@@ -16,8 +16,8 @@
         android:gravity="center"
         android:paddingLeft="32dp"
         android:paddingRight="29dp"
-        android:text="Ample Partner"
-        android:textColor="#ffffff"
+        android:text="@string/app_name"
+        android:textColor="@android:color/black"
         android:textSize="27sp" />
 
     <RelativeLayout
@@ -29,7 +29,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/ansh"
+            android:background="@color/white_transparent_color"/>
         <include layout="@layout/common_progressbar"/>
     </RelativeLayout>
 
@@ -43,7 +44,7 @@
         android:paddingLeft="64dp"
         android:paddingRight="64dp"
         android:text="No Internet Connection"
-        android:textColor="#ffffff"
+        android:textColor="@android:color/black"
         android:textSize="16sp" />
 
     <android.support.v7.widget.AppCompatTextView

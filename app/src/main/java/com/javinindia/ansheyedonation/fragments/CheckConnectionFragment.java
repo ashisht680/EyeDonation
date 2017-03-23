@@ -58,17 +58,7 @@ public class CheckConnectionFragment extends BaseFragment {
                 if (CheckConnection.haveNetworkConnection(activity)) {
                     backInternetListener.OnCallBackInternet();
                 } else {
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(activity);
-                    alertDialogBuilder.setTitle("No Internet Connection");
-                    alertDialogBuilder.setMessage("You are offline please check your internet connection");
-                    alertDialogBuilder.setPositiveButton("got it!", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface arg0, int arg1) {
-                        }
-                    });
-
-                    AlertDialog alertDialog = alertDialogBuilder.create();
-                    alertDialog.show();
+                    showDialogMethodMsg("No Internet Connection","You are offline please check your internet connection");
                 }
 
             }

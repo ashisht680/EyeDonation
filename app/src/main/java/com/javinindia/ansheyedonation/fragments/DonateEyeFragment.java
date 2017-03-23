@@ -48,6 +48,7 @@ import com.javinindia.ansheyedonation.R;
 import com.javinindia.ansheyedonation.apiparsing.stateparsing.CityMasterParsing;
 import com.javinindia.ansheyedonation.apiparsing.stateparsing.CountryMasterApiParsing;
 import com.javinindia.ansheyedonation.constant.Constants;
+import com.javinindia.ansheyedonation.font.FontAsapRegularSingleTonClass;
 import com.javinindia.ansheyedonation.utility.Utility;
 
 import java.io.File;
@@ -105,6 +106,12 @@ public class DonateEyeFragment extends BaseFragment implements View.OnClickListe
         }
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        disableTouchOfBackFragment(savedInstanceState);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -121,22 +128,38 @@ public class DonateEyeFragment extends BaseFragment implements View.OnClickListe
         imgKinInfo = (ImageView) view.findViewById(R.id.imgKinInfo);
 
         etFirstName = (AppCompatEditText) view.findViewById(R.id.etFirstName);
+        etFirstName.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         etLastName = (AppCompatEditText) view.findViewById(R.id.etLastName);
+        etLastName.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         etEmail = (AppCompatEditText) view.findViewById(R.id.etEmail);
+        etEmail.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         etContact = (AppCompatEditText) view.findViewById(R.id.etContact);
+        etContact.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         etAddress = (AppCompatEditText) view.findViewById(R.id.etAddress);
+        etAddress.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         etPinCode = (AppCompatEditText) view.findViewById(R.id.etPinCode);
+        etPinCode.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         etKinName = (AppCompatEditText) view.findViewById(R.id.etKinName);
+        etKinName.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         etKinContact = (AppCompatEditText) view.findViewById(R.id.etKinContact);
+        etKinContact.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         etKinEmail = (AppCompatEditText) view.findViewById(R.id.etKinEmail);
+        etKinEmail.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         etNote = (AppCompatEditText) view.findViewById(R.id.etNote);
+        etNote.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
 
         txtDob = (AppCompatTextView) view.findViewById(R.id.txtDob);
+        txtDob.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         txtGender = (AppCompatTextView) view.findViewById(R.id.txtGender);
+        txtGender.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         txtState = (AppCompatTextView) view.findViewById(R.id.txtState);
+        txtState.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         txtCity = (AppCompatTextView) view.findViewById(R.id.txtCity);
+        txtCity.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         txtNextOfKin = (AppCompatTextView) view.findViewById(R.id.txtNextOfKin);
+        txtNextOfKin.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         txtSubmit = (AppCompatTextView) view.findViewById(R.id.txtSubmit);
+        txtSubmit.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
 
         txtSubmit.setOnClickListener(this);
         imgDonor.setOnClickListener(this);

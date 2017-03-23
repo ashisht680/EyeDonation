@@ -80,6 +80,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rlEyeCare"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -121,6 +122,7 @@
                 android:weightSum="2">
 
                 <RelativeLayout
+                    android:id="@+id/rlEyeHospitals"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -154,6 +156,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rlFAQs"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -194,6 +197,7 @@
                 android:weightSum="2">
 
                 <RelativeLayout
+                    android:id="@+id/rlEvents"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -226,6 +230,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rlGallery"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -276,7 +281,7 @@
             android:paddingRight="10dp">
 
             <android.support.v7.widget.AppCompatButton
-                android:id="@+id/btnAddOffer"
+                android:id="@+id/btnRecipientRegister"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@color/toolbar_color"
