@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.javinindia.eyedonation">
+    package="com.javinindia.ansheyedonation">
 
     <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -30,7 +30,7 @@
         android:theme="@style/AppTheme">
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.javinindia.eyedonation.fileprovider"
+            android:authorities="com.javinindia.ansheyedonation.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -38,7 +38,7 @@
                 android:resource="@xml/provider_paths"/>
         </provider>
         <activity
-            android:name="com.javinindia.eyedonation.activity.SplashActivity"
+            android:name="com.javinindia.ansheyedonation.activity.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,7 +47,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.javinindia.eyedonation.activity.LoginActivity"
+            android:name="com.javinindia.ansheyedonation.activity.LoginActivity"
             android:screenOrientation="portrait" />
 
     </application>
