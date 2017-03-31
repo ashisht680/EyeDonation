@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -34,6 +35,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.javinindia.ansheyedonation.R;
 import com.javinindia.ansheyedonation.activity.LoginActivity;
+import com.javinindia.ansheyedonation.apiparsing.stateparsing.CountryMasterApiParsing;
 import com.javinindia.ansheyedonation.constant.Constants;
 import com.javinindia.ansheyedonation.font.FontAsapRegularSingleTonClass;
 import com.javinindia.ansheyedonation.picasso.CircleTransform;
@@ -44,18 +46,22 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by Ashish on 09-09-2016.
  */
-public class NavigationAboutFragment extends BaseFragment implements View.OnClickListener, EditProfileFragment.OnCallBackEditProfileListener, CheckConnectionFragment.OnCallBackInternetListener {
+public class NavigationAboutFragment extends BaseFragment implements View.OnClickListener, CheckConnectionFragment.OnCallBackInternetListener, EditProfileFragment.OnCallBackEditProfileListener {
     private RequestQueue requestQueue;
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     ProgressBar progressBar;
+
+    public ArrayList<String> stateList = new ArrayList<>();
+    String stateArray[] = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -121,19 +127,36 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
 
     private void displayView(CharSequence title) {
         if (CheckConnection.haveNetworkConnection(activity)) {
-            if (title.equals("Donate your eye")) {
+            if (title.equals("Edit profile")) {
+                drawerLayout.closeDrawers();
+                EditProfileFragment fragment = new EditProfileFragment();
+                fragment.setMyCallBackOfferListener(this);
+                callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
+            } else if (title.equals("Donate your eye")) {
                 drawerLayout.closeDrawers();
                 DonateEyeFragment fragment = new DonateEyeFragment();
                 callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
             } else if (title.equals("Eye care")) {
                 drawerLayout.closeDrawers();
-
+                EyeCareFragment eyeCareFragment = new EyeCareFragment();
+                callFragmentMethod(eyeCareFragment, this.getClass().getSimpleName(), R.id.container);
             } else if (title.equals("Eye Hospitals")) {
                 drawerLayout.closeDrawers();
-
+                HospitalListFragment hospitalListFragment = new HospitalListFragment();
+                callFragmentMethod(hospitalListFragment, this.getClass().getSimpleName(), R.id.container);
+                //  methodState();
             } else if (title.equals("FAQs")) {
                 drawerLayout.closeDrawers();
-
+                FAQsFragment faQsFragment = new FAQsFragment();
+                callFragmentMethod(faQsFragment, this.getClass().getSimpleName(), R.id.container);
+            } else if (title.equals("Events")) {
+                drawerLayout.closeDrawers();
+                EventListFragment faQsFragment = new EventListFragment();
+                callFragmentMethod(faQsFragment, this.getClass().getSimpleName(), R.id.container);
+            } else if (title.equals("Gallery")) {
+                drawerLayout.closeDrawers();
+                GalleryFragment galleryFragment = new GalleryFragment();
+                callFragmentMethod(galleryFragment, this.getClass().getSimpleName(), R.id.container);
             } else if (title.equals("About App")) {
                 drawerLayout.closeDrawers();
                 AboutAppFragments fragment = new AboutAppFragments();
@@ -143,9 +166,9 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
                 try {
                     Intent i = new Intent(Intent.ACTION_SEND);
                     i.setType("text/plain");
-                    i.putExtra(Intent.EXTRA_SUBJECT, R.string.app_name);
+                    i.putExtra(Intent.EXTRA_SUBJECT, "Ansh");
                     String sAux = "\nLet me recommend you this application\n\n";
-                    sAux = sAux + "https://play.google.com/store/apps/details?id=com.javinindia.eyedonation\n\n";
+                    sAux = sAux + "https://play.google.com/store/apps/details?id=com.javinindia.ansheyedonation\n\n";
                     i.putExtra(Intent.EXTRA_TEXT, sAux);
                     startActivity(Intent.createChooser(i, "Choose one"));
                 } catch (Exception e) {
@@ -160,9 +183,6 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
                 } catch (android.content.ActivityNotFoundException anfe) {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
                 }
-            } else if (title.equals("Logout")) {
-                drawerLayout.closeDrawers();
-                dialogBox();
             }
         } else {
             methodCallCheckInternet();
@@ -172,13 +192,13 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
     public void dialogBox() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(activity);
         alertDialogBuilder.setTitle("Logout");
-        alertDialogBuilder.setMessage("Thanks for visiting Ample Partner! Be back soon!");
+        alertDialogBuilder.setMessage("Thanks for visiting Ansh Be back soon!");
         alertDialogBuilder.setPositiveButton("Ok!",
                 new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
-                        //  sendDataOnLogOutApi();
+                        sendDataOnLogOutApi();
                     }
                 });
 
@@ -216,7 +236,6 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("uid", SharedPreferencesManager.getUserID(activity));
-                params.put("type", "shop");
                 return params;
             }
 
@@ -247,12 +266,9 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
             SharedPreferencesManager.setUsername(activity, null);
             SharedPreferencesManager.setPassword(activity, null);
             SharedPreferencesManager.setEmail(activity, null);
-            SharedPreferencesManager.setLocation(activity, null);
-            SharedPreferencesManager.setLatitude(activity, null);
-            SharedPreferencesManager.setLongitude(activity, null);
             SharedPreferencesManager.setProfileImage(activity, null);
-            SharedPreferencesManager.setOwnerName(activity, null);
             SharedPreferencesManager.setDeviceToken(activity, null);
+            SharedPreferencesManager.setMobile(activity, null);
             Intent refresh = new Intent(activity, LoginActivity.class);
             startActivity(refresh);//Start the same Activity
             activity.finish();
@@ -277,6 +293,10 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
             case R.id.action_feedback:
                 FeedbackFragment fragment1 = new FeedbackFragment();
                 callFragmentMethod(fragment1, this.getClass().getSimpleName(), R.id.container);
+                drawerLayout.closeDrawers();
+                return true;
+            case R.id.action_logout:
+                dialogBox();
                 drawerLayout.closeDrawers();
                 return true;
             default:
@@ -308,15 +328,6 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
         }
     }
 
-    private void saveDataOnPreference(String sEmail, String sName, String mLat, String mLong, String sID, String profilepic, String oName) {
-        SharedPreferencesManager.setUserID(activity, sID);
-        SharedPreferencesManager.setEmail(activity, sEmail);
-        SharedPreferencesManager.setUsername(activity, sName);
-        SharedPreferencesManager.setLatitude(activity, mLat);
-        SharedPreferencesManager.setLongitude(activity, mLong);
-        SharedPreferencesManager.setProfileImage(activity, profilepic);
-        SharedPreferencesManager.setOwnerName(activity, oName);
-    }
 
     private void initialize(View view) {
         progressBar = (ProgressBar) view.findViewById(R.id.progress);
@@ -358,20 +369,42 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btnRecipientRegister:
-                if (CheckConnection.haveNetworkConnection(activity)) {
-                    RecipientRegistrationFragment fragment = new RecipientRegistrationFragment();
-                    callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
-                } else {
-                    methodCallCheckInternet();
-                }
-                break;
-            case R.id.rlDonateEye:
-                DonateEyeFragment fragment = new DonateEyeFragment();
-                callFragmentMethod(fragment, this.getClass().getSimpleName(), R.id.container);
-                break;
+        if (CheckConnection.haveNetworkConnection(activity)) {
+            switch (v.getId()) {
+                case R.id.btnRecipientRegister:
+                    BloodDonateFragment recipientRegistrationFragment = new BloodDonateFragment();
+                    callFragmentMethod(recipientRegistrationFragment, this.getClass().getSimpleName(), R.id.container);
+                    break;
+                case R.id.rlDonateEye:
+                    DonateEyeFragment donateEyeFragment = new DonateEyeFragment();
+                    callFragmentMethod(donateEyeFragment, this.getClass().getSimpleName(), R.id.container);
+                    break;
+                case R.id.rlEyeHospitals:
+                    //methodState();
+                    HospitalListFragment hospitalListFragment = new HospitalListFragment();
+                    callFragmentMethod(hospitalListFragment, this.getClass().getSimpleName(), R.id.container);
+                    break;
+                case R.id.rlFAQs:
+                    FAQsFragment faQsFragment = new FAQsFragment();
+                    callFragmentMethod(faQsFragment, this.getClass().getSimpleName(), R.id.container);
+                    break;
+                case R.id.rlEvents:
+                    EventListFragment eventListFragment = new EventListFragment();
+                    callFragmentMethod(eventListFragment, this.getClass().getSimpleName(), R.id.container);
+                    break;
+                case R.id.rlGallery:
+                    GalleryFragment galleryFragment = new GalleryFragment();
+                    callFragmentMethod(galleryFragment, this.getClass().getSimpleName(), R.id.container);
+                    break;
+                case R.id.rlEyeCare:
+                    EyeCareFragment eyeCareFragment = new EyeCareFragment();
+                    callFragmentMethod(eyeCareFragment, this.getClass().getSimpleName(), R.id.container);
+                    break;
+            }
+        } else {
+            methodCallCheckInternet();
         }
+
     }
 
     public void methodCallCheckInternet() {
@@ -382,16 +415,84 @@ public class NavigationAboutFragment extends BaseFragment implements View.OnClic
 
 
     @Override
-    public void OnCallBackEditProfile() {
-        Intent refresh = new Intent(activity, LoginActivity.class);
-        startActivity(refresh);
-        activity.finish();
-    }
-
-    @Override
     public void OnCallBackInternet() {
         Intent refresh = new Intent(activity, LoginActivity.class);
         startActivity(refresh);//Start the same Activity
         activity.finish();
+    }
+
+
+    private void methodState() {
+        stateList.removeAll(stateList);
+        stateArray = null;
+        sendRequestOnState();
+    }
+
+    private void sendRequestOnState() {
+        final ProgressDialog loading = ProgressDialog.show(activity, "Loading...", "Please wait...", false, false);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.STATE_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        loading.dismiss();
+                        CountryMasterApiParsing countryMasterApiParsing = new CountryMasterApiParsing();
+                        countryMasterApiParsing.responseParseMethod(response);
+                        if (countryMasterApiParsing.getCountryDetails().getStateDetailsArrayList().size() > 0) {
+                            for (int i = 0; i < countryMasterApiParsing.getCountryDetails().getStateDetailsArrayList().size(); i++) {
+                                stateList.add(countryMasterApiParsing.getCountryDetails().getStateDetailsArrayList().get(i).getState());
+                            }
+                            if (stateList.size() > 0) {
+                                stateArray = new String[stateList.size()];
+                                stateList.toArray(stateArray);
+
+                                if (stateList != null && stateList.size() > 0) {
+                                    popUp(stateArray, "state");
+
+                                }
+                            }
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        loading.dismiss();
+                        volleyErrorHandle(error);
+                    }
+                }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("country", "india");
+                return params;
+            }
+
+        };
+        stringRequest.setTag(this.getClass().getSimpleName());
+        volleyDefaultTimeIncreaseMethod(stringRequest);
+        requestQueue = Volley.newRequestQueue(activity);
+        requestQueue.add(stringRequest);
+    }
+
+    private void popUp(final String[] popArray, final String type) {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
+        builder.setTitle("Select " + type);
+        builder.setNegativeButton(android.R.string.cancel, null);
+        builder.setItems(popArray, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+                if (type.equals("state")) {
+                    Toast.makeText(activity, popArray[item], Toast.LENGTH_LONG).show();
+                }
+                dialog.dismiss();
+            }
+        });
+        builder.create();
+        builder.show();
+    }
+
+    @Override
+    public void OnCallBackEditProfile() {
+        methodSetNavData();
     }
 }

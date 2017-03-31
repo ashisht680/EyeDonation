@@ -24,7 +24,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.javinindia.ansheyedonation.R;
 import com.javinindia.ansheyedonation.activity.LoginActivity;
-import com.javinindia.ansheyedonation.apiparsing.loginsignupparsing.SellerLoginSignUpResponse;
+import com.javinindia.ansheyedonation.apiparsing.loginsignupparsing.LoginSignupResponseParsing;
 import com.javinindia.ansheyedonation.constant.Constants;
 import com.javinindia.ansheyedonation.font.FontAsapRegularSingleTonClass;
 import com.javinindia.ansheyedonation.preference.SharedPreferencesManager;
@@ -39,9 +39,6 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener,
     private RequestQueue requestQueue;
     private EditText etUsername;
     private EditText etPassword;
-    private BaseFragment fragment;
-    private static final int REQUEST_CODE_RESOLVE_ERR = 9000;
-   // private CheckBox checkShowPassword;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,10 +69,6 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener,
         buttonLogin.setOnClickListener(this);
         txtForgotPass.setOnClickListener(this);
         txtRegistration.setOnClickListener(this);
-        /*checkShowPassword = (CheckBox) view.findViewById(R.id.checkShowPassword);
-        checkShowPassword.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        checkShowPassword.setOnClickListener(this);*/
-
         AppCompatCheckBox cbShowPwd = (AppCompatCheckBox) view.findViewById(R.id.cbShowPwd);
         cbShowPwd.setOnCheckedChangeListener(this);
 
@@ -118,13 +111,6 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener,
                 baseFragment = new SignUpFragment();
                 callFragmentMethod(baseFragment, this.getClass().getSimpleName(), R.id.container);
                 break;
-           /* case R.id.checkShowPassword:
-                if (checkShowPassword.isChecked()) {
-                    etPassword.setInputType(InputType.TYPE_CLASS_TEXT);
-                } else {
-                    etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                }
-                break;*/
         }
     }
 
@@ -138,47 +124,35 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener,
         String username = etUsername.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
         SharedPreferencesManager.setPassword(activity, password);
-        BaseFragment baseFragment = new NavigationAboutFragment();
-        callFragmentMethod(baseFragment, this.getClass().getSimpleName(), R.id.container);
-        /*if (validation(username, password)) {
-            //sendDataOnLoginApi(username, password);
-            BaseFragment baseFragment = new NavigationAboutFragment();
-            callFragmentMethod(baseFragment, this.getClass().getSimpleName(), R.id.container);
-        }*/
+        if (validation(username, password)) {
+            sendDataOnLoginApi(username, password);
+        }
 
     }
 
     private void sendDataOnLoginApi(final String username, final String password) {
         final ProgressDialog loading = ProgressDialog.show(activity, "Loading...", "Please wait...", false, false);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.SELLER_LOGIN_URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.LOGIN_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        int status;
+                        String id = null, msg = null, pic = null;
+                        String name, email, phoneNum;
                         loading.dismiss();
-                        int status = 0;
-                        String sID = null, msg = null, sPic = null;
-                        String sName, oName, sEmail, sMobileNum, sLandline, sState, sCity, sAddress, mName, mAddress, mLat, mLong, banner;
-                        SellerLoginSignUpResponse loginSignupResponseParsing = new SellerLoginSignUpResponse();
+                        LoginSignupResponseParsing loginSignupResponseParsing = new LoginSignupResponseParsing();
                         loginSignupResponseParsing.responseParseMethod(response);
 
                         status = loginSignupResponseParsing.getStatus();
                         msg = loginSignupResponseParsing.getMsg();
 
                         if (status == 1) {
-                            sID = loginSignupResponseParsing.getSellerDetailses().get(0).getId();
-                            sPic = loginSignupResponseParsing.getSellerDetailses().get(0).getProfilepic().trim();
-                            banner = loginSignupResponseParsing.getSellerDetailses().get(0).getBanner().trim();
-                            sName = loginSignupResponseParsing.getSellerDetailses().get(0).getSellerName();
-                            sEmail = loginSignupResponseParsing.getSellerDetailses().get(0).getEmail();
-                            sMobileNum = loginSignupResponseParsing.getSellerDetailses().get(0).getMobile();
-                            sLandline = loginSignupResponseParsing.getSellerDetailses().get(0).getLandline();
-                            sState = loginSignupResponseParsing.getSellerDetailses().get(0).getState();
-                            sCity = loginSignupResponseParsing.getSellerDetailses().get(0).getCity();
-                            sAddress = loginSignupResponseParsing.getSellerDetailses().get(0).getAddress();
-                            mAddress = loginSignupResponseParsing.getSellerDetailses().get(0).getAddress();
-                            mLat = loginSignupResponseParsing.getSellerDetailses().get(0).getLat();
-                            mLong = loginSignupResponseParsing.getSellerDetailses().get(0).getLongitude();
-                            saveDataOnPreference(sEmail, sName, mLat, mLong, sID, banner);
+                            id = loginSignupResponseParsing.getDetailsArrayList().get(0).getProfileId().trim();
+                            pic = loginSignupResponseParsing.getPic().trim();
+                            name = loginSignupResponseParsing.getDetailsArrayList().get(0).getProfileName().trim();
+                            email = loginSignupResponseParsing.getDetailsArrayList().get(0).getEmail().trim();
+                            phoneNum = loginSignupResponseParsing.getDetailsArrayList().get(0).getPhone().trim();
+                            saveDataOnPreference(email, name, id, pic, phoneNum);
                             Intent refresh = new Intent(activity, LoginActivity.class);
                             startActivity(refresh);//Start the same Activity
                             activity.finish();
@@ -198,13 +172,14 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener,
                 }) {
             @Override
             protected Map<String, String> getParams() {
+                //user=bdd@yahoo.com&password=123456&device_token=fdfdf
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("email", username);
+                params.put("user", username);
                 params.put("password", password);
                 if (!TextUtils.isEmpty(SharedPreferencesManager.getDeviceToken(activity))) {
-                    params.put("deviceToken", SharedPreferencesManager.getDeviceToken(activity));
+                    params.put("device_token", SharedPreferencesManager.getDeviceToken(activity));
                 } else {
-                    params.put("deviceToken", "deviceToken");
+                    params.put("device_token", "deviceToken");
                 }
                 return params;
             }
@@ -216,13 +191,12 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener,
         requestQueue.add(stringRequest);
     }
 
-    private void saveDataOnPreference(String sEmail, String sName, String mLat, String mLong, String sID, String profilepic) {
-        SharedPreferencesManager.setUserID(activity, sID);
-        SharedPreferencesManager.setEmail(activity, sEmail);
-        SharedPreferencesManager.setUsername(activity, sName);
-        SharedPreferencesManager.setLatitude(activity, mLat);
-        SharedPreferencesManager.setLongitude(activity, mLong);
-        SharedPreferencesManager.setProfileImage(activity, profilepic);
+    private void saveDataOnPreference(String email, String name, String id, String pic, String phoneNum) {
+        SharedPreferencesManager.setUserID(activity, id);
+        SharedPreferencesManager.setEmail(activity, email);
+        SharedPreferencesManager.setUsername(activity, name);
+        SharedPreferencesManager.setProfileImage(activity, pic);
+        SharedPreferencesManager.setMobile(activity, phoneNum);
     }
 
     private boolean validation(String username, String password) {

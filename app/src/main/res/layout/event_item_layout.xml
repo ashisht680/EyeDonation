@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="5dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rlEventItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtEventName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background_color"
+            android:padding="5dp"
+            android:text=""
+            android:textSize="18sp" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtDateTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtEventName"
+            android:padding="5dp"
+            android:text="" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtDateTime"
+            android:padding="5dp"
+            android:text="" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/txtDisc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtAddress"
+            android:padding="5dp"
+            android:text="" />
+
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>

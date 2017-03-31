@@ -5,10 +5,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.javinindia.ansheyedonation.R;
 import com.javinindia.ansheyedonation.font.FontAsapBoldSingleTonClass;
+import com.javinindia.ansheyedonation.font.FontAsapRegularSingleTonClass;
+import com.javinindia.ansheyedonation.picasso.CircleTransform;
+import com.squareup.picasso.Picasso;
 
 
 public class SplashActivity extends BaseActivity {
@@ -23,7 +27,7 @@ public class SplashActivity extends BaseActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(getLayoutResourceId());
         TextView txt_splash = (TextView) findViewById(R.id.txt_splash);
-        txt_splash.setTypeface(FontAsapBoldSingleTonClass.getInstance(getApplicationContext()).getTypeFace());
+        txt_splash.setTypeface(FontAsapRegularSingleTonClass.getInstance(getApplicationContext()).getTypeFace());
 
         new Handler().postDelayed(new Runnable() {
             @Override

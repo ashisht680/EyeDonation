@@ -19,6 +19,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.javinindia.ansheyedonation.R;
+import com.javinindia.ansheyedonation.fragments.CheckConnectionFragment;
 
 import java.io.File;
 import java.text.ParseException;
@@ -206,7 +208,7 @@ public class Utility {
 
     public static final File getOutputMediaFile() {
         File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES), "ansh");
+                Environment.DIRECTORY_PICTURES), "anshEye");
         if (!mediaStorageDir.exists()) {
             if (!mediaStorageDir.mkdirs()) {
                 return null;

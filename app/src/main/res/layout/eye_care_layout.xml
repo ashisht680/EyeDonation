@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/splash"
+    android:orientation="vertical">
+
+    <include layout="@layout/common_toolbar_layout" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black_transparent_color">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txtHd1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:text="Eye care tips for tired eyes\n"
+                android:textColor="@android:color/white"
+                android:textSize="17sp"
+                app:textAllCaps="false" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txtCon1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1)	Dip tea bags in water and chill them for applying on closed eye lids. They will provide relief from any kind of eye stress.\n\n2)	Place slices of cucumbers on eyes and rest for some time to remove tiredness from eyes. It is known for its cooling properties.\n\n3)	 Application of cotton balls soaked in rose water too are very effective in removing calming the eyes.\n\n"
+                android:textColor="@android:color/white" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txtHd2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Tips to protect eyes when working on a computer\n"
+                android:textColor="@android:color/white"
+                android:textSize="17sp" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txtCon2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1)	Always work in a well lit room. Lighting matters highly for not putting unnecessary stress on the eyes.\n\n2)	Take a break from the computer screen every 20 to 30 minutes. Close your eyes for a few minutes and then continue work.\n\n3)	Make sure to not become too engrossed in work that you forget to blink. Always make it a point to blink.\n\n4)	Opt for an anti-glare computer screen and anti glare glasses when working on a computer.\n\n"
+                android:textColor="@android:color/white" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txtHd3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="General tips for healthier eyes\n"
+                android:textColor="@android:color/white"
+                android:textSize="17sp" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txtCon3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1)	Drink lots of water to maintain hydration level. It will prevent itchiness and irritation of the eyes.\n\n2)	Wear sunglasses when in the sun to protect your eyes from over exposure to light.\n\n3)	Have a nutritious diet to strengthen and maintain your eye health.\n"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

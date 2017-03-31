@@ -2,7 +2,7 @@ package com.javinindia.ansheyedonation.apiparsing.base;
 
 public class ApiBaseData {
     private String msg;
-    private String status;
+    private int status;
 
     public String getMsg() {
         return msg;
@@ -12,11 +12,11 @@ public class ApiBaseData {
         this.msg = msg;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 }

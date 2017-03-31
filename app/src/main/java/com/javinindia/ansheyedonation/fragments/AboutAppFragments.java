@@ -30,12 +30,10 @@ public class AboutAppFragments extends BaseFragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        if (menu != null){
-            menu.findItem(R.id.action_changePass).setVisible(false);
-            menu.findItem(R.id.action_feedback).setVisible(false);
-        }
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        if (menu != null)
+            menu.clear();
     }
 
     @Nullable
@@ -48,7 +46,7 @@ public class AboutAppFragments extends BaseFragment {
         txtTitle = (AppCompatTextView)view.findViewById(R.id.txtTitle);
         txtTitle.setTypeface(FontAsapBoldSingleTonClass.getInstance(activity).getTypeFace());
         txtQuestion = (AppCompatTextView)view.findViewById(R.id.txtQuestion);
-        txtQuestion.setTypeface(FontAsapBoldSingleTonClass.getInstance(activity).getTypeFace());
+        txtQuestion.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         txtAns = (AppCompatTextView)view.findViewById(R.id.txtAns);
         txtAns.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         txtPoints = (AppCompatTextView)view.findViewById(R.id.txtPoints);
@@ -56,20 +54,7 @@ public class AboutAppFragments extends BaseFragment {
         return view;
     }
     private void initToolbar(View view) {
-        final Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        activity.setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                activity.onBackPressed();
-            }
-        });
-        final ActionBar actionBar = activity.getSupportActionBar();
-        actionBar.setTitle(null);
-        AppCompatTextView textView = (AppCompatTextView) view.findViewById(R.id.tittle);
-        textView.setText("About application");
-        textView.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
+        setToolbarTitle("About application");
     }
     @Override
     protected int getFragmentLayout() {

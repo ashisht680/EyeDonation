@@ -14,8 +14,26 @@ import java.util.ArrayList;
 /**
  * Created by Ashish on 21-06-2016.
  */
-public class CityMasterParsing extends ApiBaseData {
+public class CityMasterParsing  {
+    private String status;
+    private String msg;
     private CityCountryDetails countryDetails;
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public CityCountryDetails getCountryDetails() {
         return countryDetails;

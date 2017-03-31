@@ -8,6 +8,10 @@
         android:id="@+id/action_feedback"
         android:title="Feedback"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_logout"
+        android:title="Logout"
+        app:showAsAction="never"/>
 
 </menu>
 

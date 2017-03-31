@@ -5,7 +5,11 @@
 
     <group
         android:checkableBehavior="single">
-
+        <item
+            android:id="@+id/drawer_editProfile"
+            android:checkable="false"
+            android:icon="@drawable/ic_account_circle_white_24dp"
+            android:title="Edit profile"/>
         <item
             android:id="@+id/drawer_donateEye"
             android:checkable="false"
@@ -52,11 +56,7 @@
             android:icon="@drawable/ic_star_rate_black"
             android:title="Rate us"/>
 
-        <item
-            android:id="@+id/drawer_logout"
-            android:checkable="false"
-            android:icon="@drawable/log_out_black"
-            android:title="Logout"/>
+
 
     </group>
 </menu>

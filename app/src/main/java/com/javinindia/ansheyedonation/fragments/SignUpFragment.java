@@ -1,5 +1,7 @@
 package com.javinindia.ansheyedonation.fragments;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
@@ -13,19 +15,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.javinindia.ansheyedonation.R;
+import com.javinindia.ansheyedonation.activity.LoginActivity;
+import com.javinindia.ansheyedonation.apiparsing.loginsignupparsing.LoginSignupResponseParsing;
+import com.javinindia.ansheyedonation.constant.Constants;
 import com.javinindia.ansheyedonation.font.FontAsapRegularSingleTonClass;
+import com.javinindia.ansheyedonation.preference.SharedPreferencesManager;
 import com.javinindia.ansheyedonation.utility.Utility;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class SignUpFragment extends BaseFragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener{
 
-    private AppCompatEditText et_StoreNum, et_owner, et_email, et_MobileNum, et_Landline, et_password, et_ConfirmPassword;
+    private AppCompatEditText et_Name,et_email, et_MobileNum, et_password, et_ConfirmPassword;
     private RequestQueue requestQueue;
-    private BaseFragment fragment;
-  //  private CheckBox checkShowPassword;
+    RadioButton radioButton;
+    TextView txtTermCondition;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,32 +66,31 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
 
     private void initialize(View view) {
         ImageView imgBack = (ImageView) view.findViewById(R.id.imgBack);
-        imgBack.setOnClickListener(this);
-        AppCompatButton btnNext = (AppCompatButton) view.findViewById(R.id.btnNext);
-        btnNext.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        btnNext.setOnClickListener(this);
-        et_StoreNum = (AppCompatEditText) view.findViewById(R.id.et_StoreNum);
-        et_StoreNum.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        et_owner = (AppCompatEditText) view.findViewById(R.id.et_owner);
-        et_owner.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
+        AppCompatButton btnRegister = (AppCompatButton) view.findViewById(R.id.btnRegister);
+        btnRegister.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
+        AppCompatCheckBox cbShowPwd = (AppCompatCheckBox) view.findViewById(R.id.cbShowPwd);
+        AppCompatCheckBox cbShowConPwd = (AppCompatCheckBox) view.findViewById(R.id.cbShowConPwd);
+        et_Name = (AppCompatEditText) view.findViewById(R.id.et_Name);
+        et_Name.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         et_email = (AppCompatEditText) view.findViewById(R.id.et_email);
         et_email.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         et_MobileNum = (AppCompatEditText) view.findViewById(R.id.et_MobileNum);
         et_MobileNum.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        et_Landline = (AppCompatEditText) view.findViewById(R.id.et_Landline);
-        et_Landline.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         et_password = (AppCompatEditText) view.findViewById(R.id.et_password);
         et_password.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         et_ConfirmPassword = (AppCompatEditText) view.findViewById(R.id.et_ConfirmPassword);
         et_ConfirmPassword.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-      /*  checkShowPassword = (CheckBox)view.findViewById(R.id.checkShowPassword);
-        checkShowPassword.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        checkShowPassword.setOnClickListener(this);*/
+        radioButton = (RadioButton) view.findViewById(R.id.radioButton);
+        txtTermCondition = (TextView) view.findViewById(R.id.txtTermCondition);
+        txtTermCondition.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
+        txtTermCondition.setText(Utility.fromHtml("<font color=#ffffff>" + "I accept the" + "</font>" + "\t" + "<font color=#0d7bbf>" + "terms and conditions." + "</font>"));
 
-        AppCompatCheckBox cbShowPwd = (AppCompatCheckBox) view.findViewById(R.id.cbShowPwd);
-        cbShowPwd.setOnCheckedChangeListener(this);
-        AppCompatCheckBox cbShowConPwd = (AppCompatCheckBox) view.findViewById(R.id.cbShowConPwd);
+
         cbShowConPwd.setOnCheckedChangeListener(this);
+        cbShowPwd.setOnCheckedChangeListener(this);
+        btnRegister.setOnClickListener(this);
+        imgBack.setOnClickListener(this);
+        txtTermCondition.setOnClickListener(this);
     }
 
 
@@ -97,60 +113,108 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.btnNext:
+            case R.id.btnRegister:
+                Utility.hideKeyboard(activity);
                 registrationMethod();
                 break;
             case R.id.imgBack:
                 activity.onBackPressed();
                 break;
-         /*   case R.id.checkShowPassword:
-                if (checkShowPassword.isChecked()){
-                    et_password.setInputType(InputType.TYPE_CLASS_TEXT);
-                    et_ConfirmPassword.setInputType(InputType.TYPE_CLASS_TEXT);
-                }else {
-                    et_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    et_ConfirmPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                }
-                break;*/
+            case R.id.txtTermCondition:
+                BaseFragment termFragment = new TermAndConditionFragment();
+                callFragmentMethod(termFragment, this.getClass().getSimpleName(), R.id.container);
+                break;
         }
     }
 
     private void registrationMethod() {
-        String storeName = et_StoreNum.getText().toString().trim();
-        String owner = et_owner.getText().toString().trim();
+        String name = et_Name.getText().toString().trim();
         String email = et_email.getText().toString().trim();
         String mobileNum = et_MobileNum.getText().toString().trim();
-        String landline = et_Landline.getText().toString().trim();
         String password = et_password.getText().toString().trim();
         String confirmPassword = et_ConfirmPassword.getText().toString().trim();
 
-        if (registerValidation(storeName, owner, email, mobileNum, landline, password, confirmPassword)) {
-            sendDataOnRegistrationApi(storeName, owner, email, mobileNum, landline, password, confirmPassword);
+        if (registerValidation(name, email, mobileNum,  password, confirmPassword)) {
+            sendDataOnRegistrationApi(name, email, mobileNum,  password, confirmPassword);
         }
 
     }
 
-    private void sendDataOnRegistrationApi(String storeName, String owner, String email, String mobileNum, String landline, String password, String confirmPassword) {
-        BaseFragment signUpFragment = new SignUpAddressFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("storeName", storeName);
-        bundle.putString("owner", owner);
-        bundle.putString("email", email);
-        bundle.putString("mobileNum", mobileNum);
-        bundle.putString("landline", landline);
-        bundle.putString("password", password);
-        signUpFragment.setArguments(bundle);
-        callFragmentMethod(signUpFragment, this.getClass().getSimpleName(), R.id.container);
+    private void sendDataOnRegistrationApi(final String name, final String email, final String mobileNum, final String password, String confirmPassword) {
+        final ProgressDialog loading = ProgressDialog.show(activity, "Loading...", "Please wait...", false, false);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.SIGN_UP_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        int status ;
+                        String  id = null, msg = null, pic = null;
+                        String name, email, phoneNum;
+                        loading.dismiss();
+                        LoginSignupResponseParsing loginSignupResponseParsing = new LoginSignupResponseParsing();
+                        loginSignupResponseParsing.responseParseMethod(response);
+
+                        status = loginSignupResponseParsing.getStatus();
+                        msg = loginSignupResponseParsing.getMsg();
+
+                        if (status==1) {
+                            id = loginSignupResponseParsing.getDetailsArrayList().get(0).getProfileId().trim();
+                            pic = loginSignupResponseParsing.getPic().trim();
+                            name = loginSignupResponseParsing.getDetailsArrayList().get(0).getProfileName().trim();
+                            email = loginSignupResponseParsing.getDetailsArrayList().get(0).getEmail().trim();
+                            phoneNum = loginSignupResponseParsing.getDetailsArrayList().get(0).getPhone().trim();
+                            saveDataOnPreference(email, name, id, pic,phoneNum);
+                            Intent refresh = new Intent(activity, LoginActivity.class);
+                            startActivity(refresh);//Start the same Activity
+                            activity.finish();
+                        } else {
+                            if (!TextUtils.isEmpty(msg)) {
+                                showDialogMethod("Sorry, this email account already exists. Please enter a different email id.");
+                            }
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        loading.dismiss();
+                        volleyErrorHandle(error);
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                //  email=bdd@yahoo.com&mobile=95959959&name=kamal&password=123456&device_token=fdfdf
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("name",name);
+                params.put("email", email);
+                params.put("password", password);
+                params.put("mobile", mobileNum);
+                if (!TextUtils.isEmpty(SharedPreferencesManager.getDeviceToken(activity))){
+                    params.put("device_token",SharedPreferencesManager.getDeviceToken(activity));
+                }else {
+                    params.put("device_token","deviceToken");
+                }
+                return params;
+            }
+
+        };
+        stringRequest.setTag(this.getClass().getSimpleName());
+        volleyDefaultTimeIncreaseMethod(stringRequest);
+        requestQueue = Volley.newRequestQueue(activity);
+        requestQueue.add(stringRequest);
     }
 
-    private boolean registerValidation(String storeName, String owner, String email, String mobileNum, String landline, String password, String confirmPassword) {
+    private void saveDataOnPreference(String email, String name, String id, String pic, String phoneNum) {
+        SharedPreferencesManager.setUserID(activity, id);
+        SharedPreferencesManager.setEmail(activity, email);
+        SharedPreferencesManager.setUsername(activity, name);
+        SharedPreferencesManager.setProfileImage(activity, pic);
+        SharedPreferencesManager.setMobile(activity, phoneNum);
+    }
+
+    private boolean registerValidation(String storeName, String email, String mobileNum, String password, String confirmPassword) {
         if (TextUtils.isEmpty(storeName)) {
-            et_StoreNum.setError("You have not entered any store name.");
-            et_StoreNum.requestFocus();
-            return false;
-        } else if (TextUtils.isEmpty(owner)) {
-            et_owner.setError("You have not entered owner's name");
-            et_owner.requestFocus();
+            et_Name.setError("You have not entered name.");
+            et_Name.requestFocus();
             return false;
         } else if (!Utility.isEmailValid(email)) {
             et_email.setError("Email id entered is invalid");
@@ -168,6 +232,9 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
             et_ConfirmPassword.setError("Password does not match");
             et_ConfirmPassword.requestFocus();
             return false;
+        }else if (!radioButton.isChecked()){
+            Toast.makeText(activity,"You have not accepted the terms and conditions.",Toast.LENGTH_LONG).show();
+            return  false;
         } else {
             return true;
         }

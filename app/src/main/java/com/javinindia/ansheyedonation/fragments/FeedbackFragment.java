@@ -52,12 +52,10 @@ public class FeedbackFragment extends BaseFragment implements CheckConnectionFra
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        if (menu != null) {
-            menu.findItem(R.id.action_changePass).setVisible(false);
-            menu.findItem(R.id.action_feedback).setVisible(false);
-        }
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        if (menu != null)
+            menu.clear();
     }
 
     @Override
@@ -128,7 +126,6 @@ public class FeedbackFragment extends BaseFragment implements CheckConnectionFra
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id", SharedPreferencesManager.getUserID(activity));
                 params.put("feed", feed);
-                params.put("type", "shop");
                 return params;
             }
 
@@ -162,20 +159,7 @@ public class FeedbackFragment extends BaseFragment implements CheckConnectionFra
     }
 
     private void initToolbar(View view) {
-        final Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        activity.setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                activity.onBackPressed();
-            }
-        });
-        final ActionBar actionBar = activity.getSupportActionBar();
-        actionBar.setTitle(null);
-        AppCompatTextView textView = (AppCompatTextView) view.findViewById(R.id.tittle);
-        textView.setText("Feedback");
-        textView.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
+        setToolbarTitle("Feedback");
     }
 
     @Override

@@ -90,44 +90,5 @@ public class SharedPreferencesManager {
         editor.commit();
     }
 
-    public static String getLocation(Context context) {
-        return getSharedPreferences(context).getString("Location", null);
-    }
-
-    public static void setLocation(Context context, String location) {
-        final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
-        editor.putString("Location", location);
-        editor.commit();
-    }
-    public static String getLatitude(Context context) {
-        return getSharedPreferences(context).getString("Latitude", null);
-    }
-
-    public static void setLatitude(Context context, String latitude) {
-        final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
-        editor.putString("Latitude", latitude);
-        editor.commit();
-    }
-
-    public static String getLongitude(Context context) {
-        return getSharedPreferences(context).getString("Longitude", null);
-    }
-
-    public static void setLongitude(Context context, String longitude) {
-        final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
-        editor.putString("Longitude", longitude);
-        editor.commit();
-    }
-
-    public static String getOwnerName(Context context) {
-        return getSharedPreferences(context).getString("OwnerName", null);
-    }
-
-    public static void setOwnerName(Context context, String longitude) {
-        final SharedPreferences.Editor editor = getSharedPreferences(context).edit();
-        editor.putString("OwnerName", longitude);
-        editor.commit();
-    }
-
 
 }

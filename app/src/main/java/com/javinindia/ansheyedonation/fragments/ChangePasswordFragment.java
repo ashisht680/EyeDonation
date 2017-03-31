@@ -46,8 +46,6 @@ public class ChangePasswordFragment extends BaseFragment implements View.OnClick
 
     private AppCompatEditText et_old_password, et_new_password;
     private RequestQueue requestQueue;
-    private BaseFragment fragment;
-   // private CheckBox checkShowPassword;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,14 +53,6 @@ public class ChangePasswordFragment extends BaseFragment implements View.OnClick
         setHasOptionsMenu(true);
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        if (menu != null) {
-            menu.findItem(R.id.action_changePass).setVisible(false);
-            menu.findItem(R.id.action_feedback).setVisible(false);
-        }
-    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -81,20 +71,7 @@ public class ChangePasswordFragment extends BaseFragment implements View.OnClick
     }
 
     private void initToolbar(View view) {
-        final Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        activity.setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                activity.onBackPressed();
-            }
-        });
-        final ActionBar actionBar = activity.getSupportActionBar();
-        actionBar.setTitle(null);
-        AppCompatTextView textView = (AppCompatTextView) view.findViewById(R.id.tittle);
-        textView.setText("Change password");
-        textView.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
+        setToolbarTitle("Change password");
     }
 
     private void initialize(View view) {
@@ -108,9 +85,6 @@ public class ChangePasswordFragment extends BaseFragment implements View.OnClick
         et_old_password.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
         et_new_password = (AppCompatEditText) view.findViewById(R.id.et_new_password);
         et_new_password.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        /*checkShowPassword = (CheckBox) view.findViewById(R.id.checkShowPassword);
-        checkShowPassword.setTypeface(FontAsapRegularSingleTonClass.getInstance(activity).getTypeFace());
-        checkShowPassword.setOnClickListener(this);*/
         buttonResetPassword.setOnClickListener(this);
 
         AppCompatCheckBox cbOldPwd = (AppCompatCheckBox) view.findViewById(R.id.cbOldPwd);
@@ -150,7 +124,7 @@ public class ChangePasswordFragment extends BaseFragment implements View.OnClick
                         et_new_password.requestFocus();
                     } else {
                         if (CheckConnection.haveNetworkConnection(activity)) {
-                           // sendDataOnForgetPasswordApi(oldPass, newPass);
+                            sendDataOnForgetPasswordApi(oldPass, newPass);
                         } else {
                             CheckConnectionFragment fragment = new CheckConnectionFragment();
                             fragment.setMyCallBackInternetListener(this);
@@ -161,18 +135,6 @@ public class ChangePasswordFragment extends BaseFragment implements View.OnClick
                 }
 
                 break;
-          /*  case R.id.imgBack:
-                activity.onBackPressed();
-                break;*/
-           /* case R.id.checkShowPassword:
-                if (checkShowPassword.isChecked()) {
-                    et_old_password.setInputType(InputType.TYPE_CLASS_TEXT);
-                    et_new_password.setInputType(InputType.TYPE_CLASS_TEXT);
-                } else {
-                    et_old_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    et_new_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                }
-                break;*/
         }
     }
 
@@ -194,11 +156,11 @@ public class ChangePasswordFragment extends BaseFragment implements View.OnClick
                 }) {
             @Override
             protected Map<String, String> getParams() {
+                //userid=2&old_pass=jamesbond&new_pass=123456
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("id", SharedPreferencesManager.getUserID(activity));
-                params.put("type", "shop");
-                params.put("pold", old);
-                params.put("pnew", newP);
+                params.put("userid", SharedPreferencesManager.getUserID(activity));
+                params.put("old_pass", old);
+                params.put("new_pass", newP);
                 return params;
             }
 

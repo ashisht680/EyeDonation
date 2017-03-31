@@ -91,14 +91,11 @@ public class ForgotPasswordFragment extends BaseFragment implements View.OnClick
         switch (v.getId()) {
             case R.id.btn_reset_password:
                 String email = etEmailAddress.getText().toString().trim();
-                if (Utility.isEmailValid(email)) {
-                    sendDataOnForgetPasswordApi(email);
-                } else if (TextUtils.isEmpty(email)) {
-                    etEmailAddress.setError("Enter your email id");
+                 if (TextUtils.isEmpty(email)) {
+                    etEmailAddress.setError("Enter your email/mobile.");
                     etEmailAddress.requestFocus();
                 } else {
-                    etEmailAddress.setError("Enter your correct email id");
-                    etEmailAddress.requestFocus();
+                     sendDataOnForgetPasswordApi(email);
                 }
 
                 break;
@@ -125,7 +122,7 @@ public class ForgotPasswordFragment extends BaseFragment implements View.OnClick
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("uname", email);
+                params.put("user", email);
                 return params;
             }
 
@@ -137,14 +134,14 @@ public class ForgotPasswordFragment extends BaseFragment implements View.OnClick
 
     private void responseImplement(String response) {
         JSONObject jsonObject = null;
-        String userid = null, msg = null;
+        String password = null, msg = null;
         int status = 0;
         try {
             jsonObject = new JSONObject(response);
             if (jsonObject.has("status"))
                 status = jsonObject.optInt("status");
-            if (jsonObject.has("userid"))
-                userid = jsonObject.optString("userid");
+            if (jsonObject.has("password"))
+                password = jsonObject.optString("password");
             if (jsonObject.has("msg"))
                 msg = jsonObject.optString("msg");
         } catch (JSONException e) {

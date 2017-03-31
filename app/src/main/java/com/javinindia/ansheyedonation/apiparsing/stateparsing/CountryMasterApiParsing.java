@@ -9,9 +9,26 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
-public class CountryMasterApiParsing extends ApiBaseData {
-
+public class CountryMasterApiParsing  {
+    private String status;
+    private String msg;
     private CountryDetails countryDetails;
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public CountryDetails getCountryDetails() {
         return countryDetails;

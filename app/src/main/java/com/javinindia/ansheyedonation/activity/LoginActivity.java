@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 
 import com.javinindia.ansheyedonation.R;
 import com.javinindia.ansheyedonation.fragments.BaseFragment;
 import com.javinindia.ansheyedonation.fragments.CheckConnectionFragment;
+import com.javinindia.ansheyedonation.fragments.LoginFragment;
 import com.javinindia.ansheyedonation.fragments.NavigationAboutFragment;
 import com.javinindia.ansheyedonation.preference.SharedPreferencesManager;
 import com.javinindia.ansheyedonation.utility.CheckConnection;
@@ -24,21 +26,21 @@ public class LoginActivity extends BaseActivity implements CheckConnectionFragme
         setContentView(getLayoutResourceId());
         if (CheckConnection.haveNetworkConnection(this)) {
             String username = SharedPreferencesManager.getUsername(getApplicationContext());
-           /* if (TextUtils.isEmpty(username)) {
+            if (TextUtils.isEmpty(username)) {
                 BaseFragment baseFragment = new LoginFragment();
                 FragmentManager fm = this.getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fm.beginTransaction();
                 fragmentTransaction.setCustomAnimations(0, 0, 0, 0);
                 fragmentTransaction.add(R.id.container, baseFragment);
                 fragmentTransaction.commit();
-            } else {*/
-            BaseFragment baseFragment = new NavigationAboutFragment();
-            FragmentManager fm = this.getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fm.beginTransaction();
-            fragmentTransaction.setCustomAnimations(0, 0, 0, 0);
-            fragmentTransaction.add(R.id.container, baseFragment);
-            fragmentTransaction.commit();
-            // }
+            } else {
+                BaseFragment baseFragment = new NavigationAboutFragment();
+                FragmentManager fm = this.getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                fragmentTransaction.setCustomAnimations(0, 0, 0, 0);
+                fragmentTransaction.add(R.id.container, baseFragment);
+                fragmentTransaction.commit();
+            }
         } else {
             CheckConnectionFragment baseFragment = new CheckConnectionFragment();
             baseFragment.setMyCallBackInternetListener(this);
