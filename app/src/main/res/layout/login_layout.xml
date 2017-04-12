@@ -26,8 +26,6 @@
                 android:layout_height="85dp"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="25dp"
-                android:background="@color/white_transparent_color"
-                android:padding="5dp"
                 android:src="@mipmap/ansh" />
         </RelativeLayout>
 

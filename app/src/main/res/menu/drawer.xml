@@ -11,25 +11,25 @@
             android:icon="@drawable/ic_account_circle_white_24dp"
             android:title="Edit profile"/>
         <item
-            android:id="@+id/drawer_donateEye"
+            android:id="@+id/drawer_membership"
             android:checkable="false"
-            android:icon="@drawable/ic_visibility_white"
-            android:title="Donate your eye"/>
+            android:icon="@drawable/ic_add_white"
+            android:title="Membership"/>
         <item
             android:id="@+id/drawer_eyeCare"
             android:checkable="false"
-            android:icon="@drawable/ic_visibility_white"
-            android:title="Eye care"/>
+            android:icon="@drawable/ic_question_answer_white_24dp"
+            android:title="Eye care &amp; FAQs"/>
         <item
             android:id="@+id/drawer_eyeHospital"
             android:checkable="false"
             android:icon="@drawable/ic_local_hospital_white_24dp"
             android:title="Eye Hospitals"/>
-        <item
+        <!--<item
             android:id="@+id/drawer_faqs"
             android:checkable="false"
             android:icon="@drawable/ic_question_answer_white_24dp"
-            android:title="FAQs"/>
+            android:title="FAQs"/>-->
         <item
             android:id="@+id/drawer_events"
             android:checkable="false"

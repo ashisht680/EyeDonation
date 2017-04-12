@@ -26,8 +26,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:src="@mipmap/ansh"
-                android:background="@android:color/white"/>
+                android:src="@mipmap/ansh" />
         </android.support.v7.widget.Toolbar>
 
         <LinearLayout
@@ -99,15 +98,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:src="@drawable/ic_visibility_white" />
+                            android:src="@drawable/ic_question_answer_white_24dp" />
 
                         <android.support.v7.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imgEyeCare"
                             android:gravity="center_horizontal"
-                            android:text="Eye care\n"
-                            android:textAllCaps="true"
+                            android:text="EYE CARE &amp;\nFAQs"
                             android:textColor="@color/toolbar_color" />
                     </LinearLayout>
                 </RelativeLayout>
@@ -156,7 +154,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/rlFAQs"
+                    android:id="@+id/rlAboutUs"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -175,14 +173,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:src="@drawable/ic_question_answer_white_24dp" />
+                            android:tint="@android:color/white"
+                            android:src="@drawable/ic_info_black" />
 
                         <android.support.v7.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imgFAQs"
                             android:gravity="center_horizontal"
-                            android:text="FAQs"
+                            android:text="ABOUT US"
                             android:textColor="@color/toolbar_color" />
                     </LinearLayout>
                 </RelativeLayout>
@@ -223,7 +222,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imgEvents"
                             android:gravity="center_horizontal"
-                            android:text="Events"
+                            android:text="Events &amp; News"
                             android:textAllCaps="true"
                             android:textColor="@color/toolbar_color" />
                     </LinearLayout>

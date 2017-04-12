@@ -12,7 +12,7 @@
         android:layout_centerInParent="true"
         android:visibility="visible" />
 
-    <com.javinindia.ansheyedonation.utility.TouchImageView
+    <com.javinindia.ansheyedonate.utility.TouchImageView
         android:id="@+id/image_preview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
